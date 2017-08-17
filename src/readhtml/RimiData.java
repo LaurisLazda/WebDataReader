@@ -12,10 +12,10 @@ public class RimiData {
 
 	// TODO: check if server returns answer, if not handle exception and delay
 	// search for ~5 minutes.
-	// TODO: read categories of groceries
 	private List<String> products;
 	private List<Double> prices;
 	private List<String> urlList;
+	private List<String> urlSecondaryList;
 	private List<String> categoryIDs;
 
 	public static void main(String[] args) {
@@ -28,6 +28,7 @@ public class RimiData {
 		prices = new ArrayList<>();
 		urlList = new ArrayList<>();
 		categoryIDs = new ArrayList<>();
+		urlSecondaryList = new ArrayList<>();
 
 		try {
 			collectURLs();
@@ -38,16 +39,61 @@ public class RimiData {
 	}
 
 	private void collectData() throws Exception {
-		for (String string : urlList) {
-			URL url = new URL(string);
-			String inputLine;
-			int pagesCount = 0;
-			Pattern pageCount = Pattern
-					.compile("(?<=<b>1 / )(\\d{1,2})(?=</b>)");
-			Matcher matcher;
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					url.openStream()));
+		URL url;
+		String inputLine;
+		int pagesCount = 0;
+		Pattern pageCount = Pattern.compile("(?<=<b>1 / )(\\d{1,2})(?=</b>)");
+		Matcher matcher;
+		BufferedReader in;
 
+		for (String string : urlList) {
+			boolean hasCategories = true;
+			url = new URL(string);
+			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			while ((inputLine = in.readLine()) != null) {
+				if ((inputLine.replaceAll("\\s", ""))
+						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
+					inputLine = in.readLine();
+					matcher = pageCount.matcher(inputLine);
+					matcher.find();
+					pagesCount = Integer.parseInt(matcher.group());
+					hasCategories = false;
+					break;
+				}
+			}
+			in.close();
+
+			if (hasCategories) {
+				String homeURL = "https://app.rimi.lv/products";
+				url = new URL(string);
+				Pattern subCategoryIdPattern = Pattern
+						.compile("(?<=data-category-id=\")(.+?)(?=\" class)");
+				in = new BufferedReader(new InputStreamReader(url.openStream()));
+
+				while ((inputLine = in.readLine()) != null) {
+					matcher = subCategoryIdPattern.matcher(inputLine);
+					if (matcher.find()) {
+						urlSecondaryList.add(homeURL + "/" + matcher.group());
+					}
+				}
+				in.close();
+			} else {
+				for (int i = 1; i <= pagesCount; i++) {
+					if (pagesCount == 1) {
+						readPage(url);
+					} else {
+						url = new URL(string + "/page/" + i);
+						readPage(url);
+					}
+				}
+			}
+		}
+		
+		for (String subUrl : urlSecondaryList) {
+			url = new URL(subUrl);
+			pagesCount = 0;
+			in = new BufferedReader(new InputStreamReader(
+					url.openStream()));
 			while ((inputLine = in.readLine()) != null) {
 				if ((inputLine.replaceAll("\\s", ""))
 						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
@@ -58,16 +104,16 @@ public class RimiData {
 					break;
 				}
 			}
+			in.close();
 
 			for (int i = 1; i <= pagesCount; i++) {
 				if (pagesCount == 1) {
 					readPage(url);
 				} else {
-					url = new URL(string + "/page/" + i);
+					url = new URL(subUrl + "/page/" + i);
 					readPage(url);
 				}
 			}
-			in.close();
 		}
 	}
 
