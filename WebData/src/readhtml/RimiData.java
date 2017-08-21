@@ -15,6 +15,11 @@ public class RimiData {
 	// TODO: check if server returns answer, if not handle exception and delay
 	// search for ~5 minutes.
 
+	/*
+	 * Commented code is left there so it is easier to change from gathering
+	 * sub-category names to gather category names, if needed.
+	 */
+
 	// private List<String> urlList;
 	private Map<String, String> urlList;
 	// private List<String> urlSecondaryList;
@@ -58,8 +63,7 @@ public class RimiData {
 			url = new URL(string);
 			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 			while ((inputLine = in.readLine()) != null) {
-				if ((inputLine.replaceAll("\\s", ""))
-						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
+				if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"category-itemsjs-cat-items\">")) {
 					inputLine = in.readLine();
 					matcher = pageCount.matcher(inputLine);
 					matcher.find();
@@ -73,8 +77,7 @@ public class RimiData {
 			if (hasCategories) {
 				String homeURL = "https://app.rimi.lv/products";
 				url = new URL(string);
-				Pattern subCategoryIdPattern = Pattern
-						.compile("(?<=<a href=\"/products/)(.+?)(?=\" data-category-id)");
+				Pattern subCategoryIdPattern = Pattern.compile("(?<=<a href=\"/products/)(.+?)(?=\" data-category-id)");
 				in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 
 				while ((inputLine = in.readLine()) != null) {
@@ -84,9 +87,7 @@ public class RimiData {
 						}
 						matcher = subCategoryIdPattern.matcher(inputLine);
 						if (matcher.find()) {
-							urlSecondaryList.put(
-									homeURL + "/" + matcher.group(),
-									categoryName);
+							urlSecondaryList.put(homeURL + "/" + matcher.group(), categoryName);
 						}
 					}
 					if ((inputLine.replaceAll("\\s", ""))
@@ -113,8 +114,7 @@ public class RimiData {
 			pagesCount = 0;
 			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 			while ((inputLine = in.readLine()) != null) {
-				if ((inputLine.replaceAll("\\s", ""))
-						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
+				if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"category-itemsjs-cat-items\">")) {
 					inputLine = in.readLine();
 					matcher = pageCount.matcher(inputLine);
 					matcher.find();
@@ -139,16 +139,12 @@ public class RimiData {
 		double price = 0;
 		long barcode = 0;
 
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream(), "UTF8"));
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		String inputLine;
 		Pattern namePattern = Pattern.compile("(?<=name\">)(.+?)(?=</div>)");
-		Pattern wholePricePattern = Pattern
-				.compile("(?<=whole-number \">)(\\d{1,3})(?=</span>)");
-		Pattern decimalPricePattern = Pattern
-				.compile("(?<=decimal\">)(\\d{2})(?=</span>)");
-		Pattern barcodePattern = Pattern
-				.compile("(?<=data-ean=\")(\\d+)(?=\" data-item_id=)");
+		Pattern wholePricePattern = Pattern.compile("(?<=whole-number \">)(\\d{1,3})(?=</span>)");
+		Pattern decimalPricePattern = Pattern.compile("(?<=decimal\">)(\\d{2})(?=</span>)");
+		Pattern barcodePattern = Pattern.compile("(?<=data-ean=\")(\\d+)(?=\" data-item_id=)");
 		Matcher matcher;
 
 		while ((inputLine = in.readLine()) != null) {
@@ -159,8 +155,7 @@ public class RimiData {
 			String wholePrice;
 			String decimalPrice;
 			String allPrice;
-			if ((inputLine.replaceAll("\\s", ""))
-					.equals("<divclass=\"products-shelfjs-products-shelf\">")) {
+			if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"products-shelfjs-products-shelf\">")) {
 				while ((inputLine = in.readLine()) != null) {
 					if (isContent) {
 						if ((inputLine.replaceAll("\\s", "")).equals("</ul>")) {
@@ -173,19 +168,16 @@ public class RimiData {
 								barcodeFound = true;
 							}
 						}
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("<divclass=\"inforelativeclear\">")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"inforelativeclear\">")) {
 							inputLine = in.readLine();
 							matcher = namePattern.matcher(inputLine);
 							matcher.find();
 							product = matcher.group();
 						}
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("<divclass=\"price-bubble\">")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"price-bubble\">")) {
 							priceBubble = true;
 						}
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("<divclass=\"price\">")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"price\">")) {
 							if (priceBubble) {
 								priceBubble = false;
 								continue;
@@ -202,20 +194,19 @@ public class RimiData {
 							price = Double.parseDouble(allPrice);
 							webProduct = new WebProduct(categoryName, product, price, barcode);
 							products.add(webProduct);
-							System.out.println(webProduct.toString()); //test
+							System.out.println(webProduct.toString()); // test
 							barcodeFound = false;
 						}
 					}
 					if (isTable) {
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("<liclass=\"relativeitemeffectfade-shadowjs-shelf-itemshelf-item\"data-ads=\"true\"")
+						if ((inputLine.replaceAll("\\s", "")).equals(
+								"<liclass=\"relativeitemeffectfade-shadowjs-shelf-itemshelf-item\"data-ads=\"true\"")
 								|| (inputLine.replaceAll("\\s", ""))
 										.equals("<liclass=\"relativeitemeffectfade-shadowjs-shelf-itemshelf-item\"")) {
 							isContent = true;
 						}
 					}
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("<ulclass=\"shelfjs-shelfclearclearfix\">")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("<ulclass=\"shelfjs-shelfclearclearfix\">")) {
 						isTable = true;
 					}
 				}
@@ -230,14 +221,11 @@ public class RimiData {
 		String homeURL = "https://app.rimi.lv/products";
 		URL url = new URL(homeURL + "/selection");
 		String inputLine;
-		Pattern categoryIdPattern = Pattern
-				.compile("(?<=<a href=\"/products/)(.+?)(?=\" data-category-id)");
-		Pattern categoryNamePattern = Pattern
-				.compile("(?<=<span>)(.+?)(?=</span>)");
+		Pattern categoryIdPattern = Pattern.compile("(?<=<a href=\"/products/)(.+?)(?=\" data-category-id)");
+		Pattern categoryNamePattern = Pattern.compile("(?<=<span>)(.+?)(?=</span>)");
 		Matcher matcher;
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream(), "UTF8"));
-		
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+
 		while ((inputLine = in.readLine()) != null) {
 			if (isContent) {
 				if ((inputLine.replaceAll("\\s", "")).equals("</div>")) {
@@ -253,8 +241,7 @@ public class RimiData {
 					// categories.put(categoryId, categoryName);
 				}
 			}
-			if ((inputLine.replaceAll("\\s", ""))
-					.equals("<divclass=\"collapsable-groupm-bottom01hidden-xs\">")) {
+			if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"collapsable-groupm-bottom01hidden-xs\">")) {
 				isContent = true;
 			}
 		}
@@ -266,7 +253,7 @@ public class RimiData {
 			// Pattern subCategoryPattern =
 			// Pattern.compile("(?<=data-category-id=\")(.+?)(?=\" class)");
 			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
-			
+
 			while ((inputLine = in.readLine()) != null) {
 				if (isContent) {
 					if ((inputLine.replaceAll("\\s", "")).equals("</div>")) {
@@ -284,16 +271,15 @@ public class RimiData {
 						urlList.put(homeURL + "/" + categoryId, categoryName);
 					}
 				}
-				if ((inputLine.replaceAll("\\s", ""))
-						.equals("<divclass=\"collapsable-groupm-bottom01hidden-xs\">")) {
+				if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"collapsable-groupm-bottom01hidden-xs\">")) {
 					isContent = true;
 				}
 			}
 			in.close();
 		}
 	}
-	
-	public List<WebProduct> getProducts(){
+
+	public List<WebProduct> getProducts() {
 		return products;
 	}
 }
