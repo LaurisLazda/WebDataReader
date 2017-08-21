@@ -24,11 +24,6 @@ public class RimiData {
 	// private Map<String, String> categories;
 	private List<String> categories;
 
-	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		RimiData data = new RimiData();
-	}
-
 	public RimiData() {
 		// urlList = new ArrayList<>();
 		urlList = new HashMap<>();
@@ -61,7 +56,7 @@ public class RimiData {
 			categoryName = urlList.get(string);
 			boolean hasCategories = true;
 			url = new URL(string);
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 			while ((inputLine = in.readLine()) != null) {
 				if ((inputLine.replaceAll("\\s", ""))
 						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
@@ -80,7 +75,7 @@ public class RimiData {
 				url = new URL(string);
 				Pattern subCategoryIdPattern = Pattern
 						.compile("(?<=<a href=\"/products/)(.+?)(?=\" data-category-id)");
-				in = new BufferedReader(new InputStreamReader(url.openStream()));
+				in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 
 				while ((inputLine = in.readLine()) != null) {
 					if (isContent) {
@@ -116,7 +111,7 @@ public class RimiData {
 			categoryName = urlSecondaryList.get(subUrl);
 			url = new URL(subUrl);
 			pagesCount = 0;
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 			while ((inputLine = in.readLine()) != null) {
 				if ((inputLine.replaceAll("\\s", ""))
 						.equals("<divclass=\"category-itemsjs-cat-items\">")) {
@@ -145,7 +140,7 @@ public class RimiData {
 		long barcode = 0;
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream()));
+				url.openStream(), "UTF8"));
 		String inputLine;
 		Pattern namePattern = Pattern.compile("(?<=name\">)(.+?)(?=</div>)");
 		Pattern wholePricePattern = Pattern
@@ -241,7 +236,7 @@ public class RimiData {
 				.compile("(?<=<span>)(.+?)(?=</span>)");
 		Matcher matcher;
 		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream()));
+				url.openStream(), "UTF8"));
 		
 		while ((inputLine = in.readLine()) != null) {
 			if (isContent) {
@@ -270,7 +265,7 @@ public class RimiData {
 			url = new URL(homeURL + "/" + string);
 			// Pattern subCategoryPattern =
 			// Pattern.compile("(?<=data-category-id=\")(.+?)(?=\" class)");
-			in = new BufferedReader(new InputStreamReader(url.openStream()));
+			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 			
 			while ((inputLine = in.readLine()) != null) {
 				if (isContent) {
@@ -297,8 +292,8 @@ public class RimiData {
 			in.close();
 		}
 	}
-
-	// TODO: Method that returns collected data
-	// Return type to be determined (special class, list ...)
-	// private (returnType) getData () { }
+	
+	public List<WebProduct> getProducts(){
+		return products;
+	}
 }

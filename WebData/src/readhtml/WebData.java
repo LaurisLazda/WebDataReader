@@ -8,20 +8,12 @@ import java.util.List;
  * reading data from e-maxima.lv (for now)
  */
 public class WebData {
-	private List<WebProduct> products;
 
 	public static void main(String[] args) {
-		@SuppressWarnings("unused")
-		WebData data = new WebData(); 
-	}
-	
-	public WebData(){
-		products = new ArrayList<>();
-		
+		List<WebProduct> products = new ArrayList<>();
+
 		// MaximaData maximaData = new MaximaData();
 		RimiData rimiData = new RimiData();
-		// TODO: call getData of RimiData
-		// TODO: write data to DB
+		products = rimiData.getProducts();
 	}
-
 }
