@@ -10,15 +10,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Commented code is left there so it is easier to change from gathering
+ * sub-category names to gather category names if needed
+ */
+
 public class RimiData {
 
 	// TODO: check if server returns answer, if not handle exception and delay
 	// search for ~5 minutes.
-
-	/*
-	 * Commented code is left there so it is easier to change from gathering
-	 * sub-category names to gather category names, if needed.
-	 */
 
 	// private List<String> urlList;
 	private Map<String, String> urlList;

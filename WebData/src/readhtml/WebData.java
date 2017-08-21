@@ -12,8 +12,8 @@ public class WebData {
 	public static void main(String[] args) {
 		List<WebProduct> products = new ArrayList<>();
 
-		// MaximaData maximaData = new MaximaData();
-		RimiData rimiData = new RimiData();
-		products = rimiData.getProducts();
+		MaximaData maximaData = new MaximaData();
+		// RimiData rimiData = new RimiData();
+		// products = rimiData.getProducts();
 	}
 }
