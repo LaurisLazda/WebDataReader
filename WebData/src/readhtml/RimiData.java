@@ -11,8 +11,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Class for collecting product info from app.rimi.lv.
+ * 
  * Commented code is left there so it is easier to change from gathering
- * sub-category names to gather category names if needed
+ * sub-category names to gather category names if needed.
  */
 
 public class RimiData {
