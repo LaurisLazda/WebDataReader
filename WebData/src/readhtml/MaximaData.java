@@ -49,7 +49,8 @@ public class MaximaData {
 			int pagesCount = 1;
 			boolean hasCategories = true;
 
-			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+			in = new BufferedReader(new InputStreamReader(url.openStream(),
+					"UTF8"));
 			while ((inputLine = in.readLine()) != null) {
 				matcher = IdPattern.matcher(inputLine);
 				if (matcher.find()) {
@@ -68,7 +69,8 @@ public class MaximaData {
 				Pattern urlPattern = Pattern.compile("(?<=(<a href=\"))("
 						+ string + "/.+?)(?=(\\.aspx\">.+?</a>))");
 
-				in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+				in = new BufferedReader(new InputStreamReader(url.openStream(),
+						"UTF8"));
 				while ((inputLine = in.readLine()) != null) {
 					// find a start and finish for search
 					// if (finish) {
@@ -103,7 +105,8 @@ public class MaximaData {
 			url = new URL(homeURL + string + ".aspx");
 			int pagesCount = 1;
 
-			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+			in = new BufferedReader(new InputStreamReader(url.openStream(),
+					"UTF8"));
 			while ((inputLine = in.readLine()) != null) {
 				matcher = IdPattern.matcher(inputLine);
 				if (matcher.find()) {
@@ -133,12 +136,13 @@ public class MaximaData {
 
 	private void readPage(URL url) throws Exception {
 		String eur = "\\u20ac";
-		char euro = (char)Integer.parseInt(eur.substring(2), 16 );
+		char euro = (char) Integer.parseInt(eur.substring(2), 16);
 		String inputLine;
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=>)(.+?)(?=</a>)");
 		Pattern pricePattern = Pattern
-				.compile("(?<=<strong>)(\\d{1,3})(,)(\\d{2})(?= " + euro + "</strong>)");
+				.compile("(?<=<strong>)(\\d{1,3})(,)(\\d{2})(?= " + euro
+						+ "</strong>)");
 
 		in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
@@ -223,7 +227,8 @@ public class MaximaData {
 		in.close();
 
 		for (String category : urlCategorys) {
-			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+			in = new BufferedReader(new InputStreamReader(url.openStream(),
+					"UTF8"));
 			String pattern = "(?<=(<a href=\"))(" + category
 					+ "/.+?)(?=(\\.aspx\">.+?</a>))";
 			urlPattern = Pattern.compile(pattern);

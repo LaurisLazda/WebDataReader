@@ -52,7 +52,7 @@ public class WebProduct {
 
 	@Override
 	public String toString() {
-		return "[category=" + category + ", product=" + product
-				+ ", price=" + price + ", barcode=" + barcode + "]";
+		return "[category=" + category + ", product=" + product + ", price="
+				+ price + ", barcode=" + barcode + "]";
 	}
 }

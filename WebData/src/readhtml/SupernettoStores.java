@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class to collect SuperNetto stores.
+ * Class to collect SuperNetto stores from webpage.
  */
 
 public class SupernettoStores {

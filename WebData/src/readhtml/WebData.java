@@ -17,6 +17,8 @@ public class WebData {
 		RimiData rimiData = new RimiData();
 		products = rimiData.getProducts();
 		SupernettoStores supernettoStores = new SupernettoStores();
-		stores = supernettoStores.getStores();
+		stores.addAll(supernettoStores.getStores());
+		ElviStores elviStores = new ElviStores();
+		stores.addAll(elviStores.getStores());
 	}
 }

@@ -7,7 +7,7 @@ package readhtml;
 public class StoreData {
 	private String storeName;
 	private String storeAddress;
-	
+
 	public StoreData(String storeName, String storeAddress) {
 		setStoreName(storeName);
 		setStoreAddress(storeAddress);
@@ -31,7 +31,7 @@ public class StoreData {
 
 	@Override
 	public String toString() {
-		return "[storeName=" + storeName + ", storeAddress="
-				+ storeAddress + "]";
+		return "[storeName=" + storeName + ", storeAddress=" + storeAddress
+				+ "]";
 	}
 }
