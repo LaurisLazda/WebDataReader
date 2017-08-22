@@ -20,5 +20,8 @@ public class WebData {
 		stores.addAll(supernettoStores.getStores());
 		ElviStores elviStores = new ElviStores();
 		stores.addAll(elviStores.getStores());
+		;
+		MegoStores megoStores = new MegoStores();
+		stores.addAll(megoStores.getStores());
 	}
 }
