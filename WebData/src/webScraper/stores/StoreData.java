@@ -1,4 +1,4 @@
-package readhtml;
+package webScraper.stores;
 
 /**
  * Class organizes data about Stores.

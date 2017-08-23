@@ -1,4 +1,4 @@
-package readhtml;
+package webScraper.products;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

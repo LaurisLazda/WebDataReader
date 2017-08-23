@@ -1,7 +1,14 @@
-package readhtml;
+package webScraper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import webScraper.products.RimiData;
+import webScraper.products.WebProduct;
+import webScraper.stores.ElviStores;
+import webScraper.stores.MegoStores;
+import webScraper.stores.StoreData;
+import webScraper.stores.SupernettoStores;
 
 /**
  * Class for calling MaximaData and RimiData to write WebProducts to DB. !!! Not

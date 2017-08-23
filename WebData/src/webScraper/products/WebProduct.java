@@ -1,4 +1,4 @@
-package readhtml;
+package webScraper.products;
 
 /**
  * Class to organize data collected from e-maxima.lv and app.rimi.lv. !!! Not
