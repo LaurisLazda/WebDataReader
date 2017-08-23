@@ -10,8 +10,7 @@ public class WebProduct {
 	private double price;
 	private long barcode;
 
-	public WebProduct(String category, String product, double price,
-			long barcode) {
+	public WebProduct(String category, String product, double price, long barcode) {
 		setCategory(category);
 		setProduct(product);
 		setPrice(price);
@@ -52,7 +51,6 @@ public class WebProduct {
 
 	@Override
 	public String toString() {
-		return "[category=" + category + ", product=" + product
-				+ ", price=" + price + ", barcode=" + barcode + "]";
+		return "[category=" + category + ", product=" + product + ", price=" + price + ", barcode=" + barcode + "]";
 	}
 }

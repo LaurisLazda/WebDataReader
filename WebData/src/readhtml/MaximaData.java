@@ -65,8 +65,7 @@ public class MaximaData {
 			in.close();
 
 			if (hasCategories) {
-				Pattern urlPattern = Pattern.compile("(?<=(<a href=\"))("
-						+ string + "/.+?)(?=(\\.aspx\">.+?</a>))");
+				Pattern urlPattern = Pattern.compile("(?<=(<a href=\"))(" + string + "/.+?)(?=(\\.aspx\">.+?</a>))");
 
 				in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 				while ((inputLine = in.readLine()) != null) {
@@ -133,12 +132,11 @@ public class MaximaData {
 
 	private void readPage(URL url) throws Exception {
 		String eur = "\\u20ac";
-		char euro = (char)Integer.parseInt(eur.substring(2), 16 );
+		char euro = (char) Integer.parseInt(eur.substring(2), 16);
 		String inputLine;
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=>)(.+?)(?=</a>)");
-		Pattern pricePattern = Pattern
-				.compile("(?<=<strong>)(\\d{1,3})(,)(\\d{2})(?= " + euro + "</strong>)");
+		Pattern pricePattern = Pattern.compile("(?<=<strong>)(\\d{1,3})(,)(\\d{2})(?= " + euro + "</strong>)");
 
 		in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
@@ -146,12 +144,10 @@ public class MaximaData {
 			boolean isContent = false;
 
 			// TODO: content of some pages is't read correctly. Should fix it
-			if ((inputLine.replaceAll("\\s", ""))
-					.equals("<divid=\"main-content\">")) {
+			if ((inputLine.replaceAll("\\s", "")).equals("<divid=\"main-content\">")) {
 				while ((inputLine = in.readLine()) != null) {
 					if (isContent) {
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("</tbody></table>")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("</tbody></table>")) {
 							break;
 						}
 						if ((inputLine.replaceAll("\\s", "")).equals("<h3>")) {
@@ -162,13 +158,11 @@ public class MaximaData {
 							// temporary output for testing
 							System.out.print(matcher.group() + " = ");
 						}
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("<pclass=\"guide\">")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("<pclass=\"guide\">")) {
 							inputLine = in.readLine();
 							matcher = pricePattern.matcher(inputLine);
 							matcher.find();
-							prices.add(Double.parseDouble((matcher.group())
-									.replaceAll(",", ".")));
+							prices.add(Double.parseDouble((matcher.group()).replaceAll(",", ".")));
 							// temporary output for testing
 							System.out.println(matcher.group());
 						}
@@ -178,8 +172,7 @@ public class MaximaData {
 							isContent = true;
 						}
 					}
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("<tableclass='datatype1'>")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("<tableclass='datatype1'>")) {
 						isTable = true;
 					}
 				}
@@ -201,12 +194,10 @@ public class MaximaData {
 
 		in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
-			if ((inputLine.replaceAll("\\s", ""))
-					.equals("<spanid=\"ctl00_phSiteMapMenu_menuCategory_menuSitemap\">")) {
+			if ((inputLine.replaceAll("\\s", "")).equals("<spanid=\"ctl00_phSiteMapMenu_menuCategory_menuSitemap\">")) {
 				while ((inputLine = in.readLine()) != null) {
 					// (?) add product category names into WebProduct fields
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("</ul></span>")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("</ul></span>")) {
 						break;
 					}
 
@@ -224,8 +215,7 @@ public class MaximaData {
 
 		for (String category : urlCategorys) {
 			in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
-			String pattern = "(?<=(<a href=\"))(" + category
-					+ "/.+?)(?=(\\.aspx\">.+?</a>))";
+			String pattern = "(?<=(<a href=\"))(" + category + "/.+?)(?=(\\.aspx\">.+?</a>))";
 			urlPattern = Pattern.compile(pattern);
 			while ((inputLine = in.readLine()) != null) {
 				if ((inputLine.replaceAll("\\s", ""))
@@ -233,8 +223,7 @@ public class MaximaData {
 					while ((inputLine = in.readLine()) != null) {
 						// (?) add product subcategory names into WebProduct
 						// fields
-						if ((inputLine.replaceAll("\\s", ""))
-								.equals("</ul></span>")) {
+						if ((inputLine.replaceAll("\\s", "")).equals("</ul></span>")) {
 							break;
 						}
 
