@@ -33,25 +33,22 @@ public class MegoStores {
 		String inputLine;
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=<h3>)(.+?)(?=</h3>)");
-		Pattern addressPattern = Pattern
-				.compile("(?<=<div>)(.+?)(\\d)(\\w?)(\\s?)(?=</div>)");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream(), "UTF8"));
+		Pattern addressPattern = Pattern.compile("(?<=<div>)(.+?)(?=</div>)");
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
-			// if ((inputLine.replaceAll("\\s", ""))
-			// .equals("Sv.08:00&ndash;19:00</p>")) {
-			// break;
-			// }
-			matcher = namePattern.matcher(inputLine);
-			if (matcher.find()) {
-				storeName = matcher.group();
-			}
-
-			matcher = addressPattern.matcher(inputLine);
-			if (matcher.find()) {
-				storeAddress = matcher.group();
-				storeList.add(new StoreData("Mego \"" + storeName + "\"",
-						storeAddress));
+			if ((inputLine.replaceAll("\\s", "")).equals("<pstyle=\"margin:0cm;margin-bottom:.0001pt\">&nbsp;</p>")) {
+				while ((inputLine = in.readLine()) != null) {
+					matcher = namePattern.matcher(inputLine);
+					if (matcher.find()) {
+						storeName = matcher.group();
+					}
+					matcher = addressPattern.matcher(inputLine);
+					if (matcher.find()) {
+						storeAddress = matcher.group();
+						storeList.add(new StoreData("Mego \"" + storeName + "\"", storeAddress));
+					}
+				}
+				break;
 			}
 		}
 		in.close();

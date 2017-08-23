@@ -32,29 +32,23 @@ public class SupernettoStores {
 		String storeAddress = "";
 		String inputLine;
 		Matcher matcher;
-		Pattern namePattern = Pattern
-				.compile("(?<=\\s)([\\w])(.+?)(?=\\s+</div>)");
-		Pattern addressPattern = Pattern
-				.compile("(?<=<p class=\"address-line\">)(.+?)(?=</p>)");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream(), "UTF8"));
+		Pattern namePattern = Pattern.compile("(?<=\\s)([\\w])(.+?)(?=\\s+</div>)");
+		Pattern addressPattern = Pattern.compile("(?<=<p class=\"address-line\">)(.+?)(?=</p>)");
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
 			if ((inputLine.replaceAll("\\s", ""))
 					.equals("<divclass=\"map-search\"id=\"map-canvas\"style=\"height:350px;\"></div>")) {
 				while ((inputLine = in.readLine()) != null) {
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("<divclass=\"shops-search-results-keys\">")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"shops-search-results-keys\">")) {
 						break;
 					}
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("<divclass=\"title\">")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"title\">")) {
 						inputLine = in.readLine();
 						matcher = namePattern.matcher(inputLine);
 						matcher.find();
 						storeName = matcher.group();
 					}
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("<divclass=\"address\">")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("<divclass=\"address\">")) {
 						inputLine = in.readLine();
 						matcher = addressPattern.matcher(inputLine);
 						matcher.find();

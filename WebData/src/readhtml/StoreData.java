@@ -31,7 +31,6 @@ public class StoreData {
 
 	@Override
 	public String toString() {
-		return "[storeName=" + storeName + ", storeAddress=" + storeAddress
-				+ "]";
+		return "[storeName=" + storeName + ", storeAddress=" + storeAddress + "]";
 	}
 }

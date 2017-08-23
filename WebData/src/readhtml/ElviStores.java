@@ -33,18 +33,13 @@ public class ElviStores {
 		String inputLine;
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=, )(.+?)(?=,)");
-		Pattern addressPattern = Pattern
-				.compile("(?<=\\]\\[0\\] = \")(.+?)(\\d+)(\\w?)(?=, )");
-		Pattern addressPattern2 = Pattern
-				.compile("(?<=\"&quot;)(.+?)(?=&quot;)");
-		BufferedReader in = new BufferedReader(new InputStreamReader(
-				url.openStream(), "UTF8"));
+		Pattern addressPattern = Pattern.compile("(?<=\\]\\[0\\] = \")(.+?)(\\d+)(\\w?)(?=, )");
+		Pattern addressPattern2 = Pattern.compile("(?<=\"&quot;)(.+?)(?=&quot;)");
+		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
-			if ((inputLine.replaceAll("\\s", ""))
-					.equals("//infoWindow=newgoogle.maps.InfoWindow();")) {
+			if ((inputLine.replaceAll("\\s", "")).equals("//infoWindow=newgoogle.maps.InfoWindow();")) {
 				while ((inputLine = in.readLine()) != null) {
-					if ((inputLine.replaceAll("\\s", ""))
-							.equals("for(i=0;i<gMarkers.length;i++){")) {
+					if ((inputLine.replaceAll("\\s", "")).equals("for(i=0;i<gMarkers.length;i++){")) {
 						break;
 					}
 					matcher = addressPattern2.matcher(inputLine);
@@ -55,13 +50,11 @@ public class ElviStores {
 						if (matcher.find()) {
 							storeName = matcher.group();
 							storeName = fixData(storeName);
-							storeList.add(new StoreData("Elvi \"" + storeName
-									+ "\"", storeAddress));
+							storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
 						} else {
 							storeName = storeAddress;
 							storeName = fixData(storeName);
-							storeList.add(new StoreData("Elvi \"" + storeName
-									+ "\"", storeAddress));
+							storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
 						}
 						continue;
 					}
@@ -76,8 +69,7 @@ public class ElviStores {
 					if (matcher.find()) {
 						storeName = matcher.group();
 						storeName = fixData(storeName);
-						storeList.add(new StoreData("Elvi \"" + storeName
-								+ "\"", storeAddress));
+						storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
 						continue;
 					}
 				}
@@ -104,34 +96,34 @@ public class ElviStores {
 			return "Aizkraukle";
 		} else if (data.equals("Veikals Vecsaule")) {
 			return "Vecsaule";
-		} else if (data.equals("InÄukalns, Laimes iela 1")) {
+		} else if (data.equals("Inèukalns, Laimes iela 1")) {
 			return "Laimes iela 1";
 		} else if (data.equals("Laimes iela 1")) {
-			return "InÄukalns";
+			return "Inèukalns";
 		} else if (data.equals("1.maija iela 72")) {
 			return "Malta";
 		} else if (data.equals("Jumpravas pagasts")) {
 			return "Jumprava";
 		} else if (data.equals("Malta, 1.maija iela 72")) {
 			return "1.maija iela 72";
-		} else if (data.equals("Ozolnieki, RÄ«gas iela 44")) {
-			return "RÄ«gas iela 44";
-		} else if (data.equals("RÄ«gas iela 44")) {
+		} else if (data.equals("Ozolnieki, Rîgas iela 44")) {
+			return "Rîgas iela 44";
+		} else if (data.equals("Rîgas iela 44")) {
 			return "Ozolnieki";
-		} else if (data.equals("UgÄle  Ventspils novads")) {
-			return "UgÄle";
-		} else if (data.equals("VangaÅ¾i, Gaujas iela 10")) {
+		} else if (data.equals("Ugâle  Ventspils novads")) {
+			return "Ugâle";
+		} else if (data.equals("Vangaþi, Gaujas iela 10")) {
 			return "Gaujas iela 10";
 		} else if (data.equals("Gaujas iela 10")) {
-			return "VangaÅ¾i";
-		} else if (data.equals("VangaÅ¾i, Vidzemes iela 10")) {
+			return "Vangaþi";
+		} else if (data.equals("Vangaþi, Vidzemes iela 10")) {
 			return "Vidzemes iela 10";
 		} else if (data.equals("Vidzemes iela 10")) {
-			return "VangaÅ¾i";
-		} else if (data.equals("BÄ“ne, Stacijas iela 9")) {
+			return "Vangaþi";
+		} else if (data.equals("Bâne, Stacijas iela 9")) {
 			return "Stacijas iela 9";
 		} else if (data.equals("Stacijas iela 9")) {
-			return "BÄ“ne";
+			return "Bâne";
 		} else
 			return data;
 	}
