@@ -9,7 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class to collect Elvi stores from webpage.
+ * Class to collect list of Elvi stores from webpage.
+ * 
+ * @author Jānis Lazda
  */
 
 public class ElviStores {
@@ -17,6 +19,9 @@ public class ElviStores {
 	private String homeURL = "http://www.elvi.lv/lv/veikali-elvi";
 	private List<StoreData> storeList;
 
+	/**
+	 * Constructor of ElviStores. Inicializes storeList and calls collectData()
+	 */
 	public ElviStores() {
 		storeList = new ArrayList<>();
 		try {
@@ -26,6 +31,10 @@ public class ElviStores {
 		}
 	}
 
+	/**
+	 * Method which reads webpage source and populates storeList with store
+	 * names and addresses
+	 */
 	public void collectData() throws Exception {
 		URL url = new URL(homeURL);
 		String storeName = "";
@@ -33,13 +42,18 @@ public class ElviStores {
 		String inputLine;
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=, )(.+?)(?=,)");
-		Pattern addressPattern = Pattern.compile("(?<=\\]\\[0\\] = \")(.+?)(\\d+)(\\w?)(?=, )");
-		Pattern addressPattern2 = Pattern.compile("(?<=\"&quot;)(.+?)(?=&quot;)");
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+		Pattern addressPattern = Pattern
+				.compile("(?<=\\]\\[0\\] = \")(.+?)(\\d+)(\\w?)(?=, )");
+		Pattern addressPattern2 = Pattern
+				.compile("(?<=\"&quot;)(.+?)(?=&quot;)");
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
-			if ((inputLine.replaceAll("\\s", "")).equals("//infoWindow=newgoogle.maps.InfoWindow();")) {
+			if ((inputLine.replaceAll("\\s", ""))
+					.equals("//infoWindow=newgoogle.maps.InfoWindow();")) {
 				while ((inputLine = in.readLine()) != null) {
-					if ((inputLine.replaceAll("\\s", "")).equals("for(i=0;i<gMarkers.length;i++){")) {
+					if ((inputLine.replaceAll("\\s", ""))
+							.equals("for(i=0;i<gMarkers.length;i++){")) {
 						break;
 					}
 					matcher = addressPattern2.matcher(inputLine);
@@ -50,11 +64,13 @@ public class ElviStores {
 						if (matcher.find()) {
 							storeName = matcher.group();
 							storeName = fixData(storeName);
-							storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
+							storeList.add(new StoreData("Elvi \"" + storeName
+									+ "\"", storeAddress));
 						} else {
 							storeName = storeAddress;
 							storeName = fixData(storeName);
-							storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
+							storeList.add(new StoreData("Elvi \"" + storeName
+									+ "\"", storeAddress));
 						}
 						continue;
 					}
@@ -69,7 +85,8 @@ public class ElviStores {
 					if (matcher.find()) {
 						storeName = matcher.group();
 						storeName = fixData(storeName);
-						storeList.add(new StoreData("Elvi \"" + storeName + "\"", storeAddress));
+						storeList.add(new StoreData("Elvi \"" + storeName
+								+ "\"", storeAddress));
 						continue;
 					}
 				}
@@ -128,6 +145,11 @@ public class ElviStores {
 			return data;
 	}
 
+	/**
+	 * Method to pass collected data
+	 * 
+	 * @return list of StoreData
+	 */
 	public List<StoreData> getStores() {
 		return storeList;
 	}

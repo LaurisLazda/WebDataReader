@@ -10,10 +10,14 @@ import webScraper.stores.MegoStores;
 import webScraper.stores.StoreData;
 import webScraper.stores.SupernettoStores;
 
+// !!! Not reading data from e-maxima.lv (FOR NOW) !!!
 /**
- * Class for calling MaximaData and RimiData to write WebProducts to DB. !!! Not
- * reading data from e-maxima.lv (for now)
- * Calls SupernettoStores, ElviStores, MegoStores to collect store lists from websites.
+ * Class for calling MaximaData and RimiData to gather WebProducts to store in
+ * DB. Also calls SupernettoStores, ElviStores, MegoStores to collect StoreData
+ * lists from websites to store in DB.
+ * 
+ * @author Lauris Lazda
+ * @author Jānis Lazda
  */
 public class WebData {
 
