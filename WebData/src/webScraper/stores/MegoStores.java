@@ -9,7 +9,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Class to collect Mego stores from webpage.
+ * Class to collect list of Mego stores from webpage.
+ * 
+ * @author Jānis Lazda
  */
 
 public class MegoStores {
@@ -17,6 +19,9 @@ public class MegoStores {
 	private String homeURL = "http://www.mego.lv/kontakti";
 	private List<StoreData> storeList;
 
+	/**
+	 * Constructor of MegoStores. Inicializes storeList and calls collectData()
+	 */
 	public MegoStores() {
 		storeList = new ArrayList<>();
 		try {
@@ -26,6 +31,10 @@ public class MegoStores {
 		}
 	}
 
+	/**
+	 * Method which reads webpage source and populates storeList with store
+	 * names and addresses
+	 */
 	public void collectData() throws Exception {
 		URL url = new URL(homeURL);
 		String storeName = "";
@@ -34,9 +43,11 @@ public class MegoStores {
 		Matcher matcher;
 		Pattern namePattern = Pattern.compile("(?<=<h3>)(.+?)(?=</h3>)");
 		Pattern addressPattern = Pattern.compile("(?<=<div>)(.+?)(?=</div>)");
-		BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), "UTF8"));
+		BufferedReader in = new BufferedReader(new InputStreamReader(
+				url.openStream(), "UTF8"));
 		while ((inputLine = in.readLine()) != null) {
-			if ((inputLine.replaceAll("\\s", "")).equals("<pstyle=\"margin:0cm;margin-bottom:.0001pt\">&nbsp;</p>")) {
+			if ((inputLine.replaceAll("\\s", ""))
+					.equals("<pstyle=\"margin:0cm;margin-bottom:.0001pt\">&nbsp;</p>")) {
 				while ((inputLine = in.readLine()) != null) {
 					matcher = namePattern.matcher(inputLine);
 					if (matcher.find()) {
@@ -45,7 +56,8 @@ public class MegoStores {
 					matcher = addressPattern.matcher(inputLine);
 					if (matcher.find()) {
 						storeAddress = matcher.group();
-						storeList.add(new StoreData("Mego \"" + storeName + "\"", storeAddress));
+						storeList.add(new StoreData("Mego \"" + storeName
+								+ "\"", storeAddress));
 					}
 				}
 				break;
@@ -54,6 +66,11 @@ public class MegoStores {
 		in.close();
 	}
 
+	/**
+	 * Method to pass collected data
+	 * 
+	 * @return list of StoreData
+	 */
 	public List<StoreData> getStores() {
 		return storeList;
 	}

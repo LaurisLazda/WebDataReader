@@ -13,10 +13,12 @@ import java.util.regex.Pattern;
 /**
  * Class for collecting product info from app.rimi.lv.
  * 
- * Commented code is left there so it is easier to change from gathering
- * sub-category names to gather only category names if needed.
+ * @author Lauris Lazda
+ * @author Jānis Lazda
  */
 
+// Commented code is left there so it is easier to change from gathering
+// sub-category names to gather only category names if needed.
 public class RimiData {
 
 	// TODO: check if server returns answer, if not handle exception and delay
@@ -31,6 +33,10 @@ public class RimiData {
 	// private Map<String, String> categories;
 	private List<String> categories;
 
+	/**
+	 * Constructor of RimiData. Inicializes Lists and HashMaps and calls
+	 * collectURLs() and collectData()
+	 */
 	public RimiData() {
 		// urlList = new ArrayList<>();
 		urlList = new HashMap<>();
@@ -323,9 +329,9 @@ public class RimiData {
 	}
 
 	/**
-	 * Method to pass data
+	 * Method to pass collected data
 	 * 
-	 * @return list of product objects
+	 * @return list of WebProducts
 	 */
 	public List<WebProduct> getProducts() {
 		return products;
